@@ -20,8 +20,10 @@ def home(request):
     
     """
     
+    vegetable = ['potato', 'pumpkin', 'tomatato']
     
-    return render(request, "home/index.html", context= {'peoples' : peoples, 'text' : text })
+    
+    return render(request, "home/index.html", context= {'peoples' : peoples, 'text' : text, "vegetable": vegetable })
 
 
 def contact(request):
