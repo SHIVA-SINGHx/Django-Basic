@@ -4,6 +4,7 @@ from django.db import models
 
 class Student(models.Model):
     
+    # id = models.AutoField()
     name = models.CharField(max_length=40)
     age = models.IntegerField()
     email = models.EmailField()
@@ -12,3 +13,6 @@ class Student(models.Model):
     file = models.FileField()
     
     
+    
+class Product(models.Model):
+    pass
