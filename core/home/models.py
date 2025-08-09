@@ -11,6 +11,8 @@ class Student(models.Model):
     address = models.TextField()
     image = models.ImageField()
     file = models.FileField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
     
     
     
