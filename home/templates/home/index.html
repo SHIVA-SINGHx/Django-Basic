@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Django tutorial</title>
+</head>
+<body>
+    <h1>this is the templates from html</h1>
+
+    <hr>
+
+    <p>this is the paragraph from the html and templates</p>
+
+    <hr>
+<table class="table table-dark">
+  <thead>
+    <tr>
+      <th scope="col">S.no</th>
+      <th scope="col">First</th>
+      <th scope="col">Age</th>
+      <th scope="col">Can vote</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    {% for people in peoples %}
+    <tr>
+      <th scope="row">{{forloop.counter}}</th>
+      <td>{{people.name}}</td>
+      <td>{{people.age}}</td>
+      <td>
+    {% if people.age >= 18 %}
+    👍
+    {% else %}
+    👎
+    {% endif %}
+
+      </td>
+    </tr>
+    <tr>
+        {% endfor %}
+      
+  </tbody>
+</table>
+
+<p>{{text}}</p>
+
+<hr>
+
+<p>
+    {% if "pumpkin" in vegetable %}
+    available
+
+    {% else %}
+    not available
+
+    {% endif %}
+
+</p>
+</body>
+</html>
