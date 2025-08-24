@@ -13,6 +13,10 @@ urlpatterns = [
     path('recipe/', recipe, name="recipe"),
     path('update-recipe/<id>/', update_recipe, name="update-recipe"),
     path('delete-recipe/<id>/', delete_recipe, name="delete-recipe"),
-    path('contact-page/', contact, name="contact")
+    path('contact-page/', contact, name="contact"),
+    path('login/', login_page, name="login_page"),
+    path('register/', register_page, name="register_page")
+    
+    
     
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
 from .models import *
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate , login, logout
+from django.contrib import messages
 
 
 # Create your views here.
@@ -21,17 +24,19 @@ def recipe(request):
         return redirect('/recipe/')
     
     queryset = Recipe.objects.all()
+    
+    if request.GET.get('search'):
+        queryset = queryset.filter(recipe_name__icontains = request.GET.get('search'))
+        
+    
     context = {'recipe': queryset}
     
     
     return render(request, 'recipe.html', context)
 
 
-
 def update_recipe(request, id):
-    
     queryset = Recipe.objects.get(id = id)
-    
     if request.method == "POST":
         
         data = request.POST
@@ -53,8 +58,69 @@ def update_recipe(request, id):
     return render(request, 'update_recipe.html', context)
     
 
-
 def delete_recipe(request, id):
     queryset = Recipe.objects.get(id = id)
     queryset.delete()
     return redirect('/recipe/')
+
+
+def login_page(request):
+    if request.method == 'POST': 
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        if not User.objects.filter(username = username).exists():
+            messages.error(request, 'Invalid Username')
+            return redirect('/login/')
+        
+        user = authenticate(username = username, password = password)
+        
+        if user is None:
+            messages.error(request, 'invalid details')
+            return redirect('/login/')
+        
+        else:
+            login(request, user)
+            return redirect('/recipe/')
+            
+    return render(request, 'login.html')
+
+
+def logout_page(request):
+    return redirect('/login/')
+        
+    
+
+def register_page(request):
+    
+    if request.method == 'POST':
+        
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        email = request.POST.get('email')
+        username = request.POST.get('username') 
+        password = request.POST.get('password')
+        
+        user = User.objects.filter(username = username)
+        
+        if user.exists():
+            messages.info(request, 'Username already exist')
+            return redirect('/register/')
+        
+        user = User.objects.create(
+            first_name = first_name,
+            last_name = last_name,
+            email = email,
+            username = username,
+            password = password
+        )
+        
+        user.set_password(password)
+        user.save()
+        
+        messages.info(request, 'Account created succesfully')
+        
+        return redirect('/register/')
+        
+        
+    return render(request, 'register.html')
